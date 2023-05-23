@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Food calories</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<div class="container">
+
+    <div id="add-food" class="mt-3">
+        <button onclick="goBack()" class="btn btn-secondary">←Back</button>
+        <h1 class="mt-3">Add Food</h1>
+        <form class="mt-3">
+            <div class="mb-3">
+                <label class="form-label">Food Name</label>
+                <input required class="form-control" placeholder="Enter the food name" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Food Weight</label>
+                <input required type="number" class="form-control" placeholder="Enter the food weight" />
+            </div>
+            <div>
+                <button class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="home">
+        <h1 class="mt-3">Food calories</h1>
+        <div class="row">
+            <label class="form-label">Current Date</label>
+            <div class="col-12 col-md-6 col-lg-3">
+                <input class="form-control" type="date"/>
+            </div>
+        </div>
+        <h6 class="text-secondary text-center mt-4">Calories</h6>
+        <h2 class="text-center mt-3">
+            1.480 kcal
+        </h2>
+        <div class="row">
+            <div class="col-12 col-lg-4 mb-3">
+                <h2>Carbs</h2>
+                <h5 class="text-secondary">70g</h5>
+                <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width: 75%"></div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 mb-3">
+                <h2>Fat</h2>
+                <h5 class="text-secondary">26g</h5>
+                <div class="progress" role="progressbar" aria-label="Warning striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" style="width: 75%"></div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 mb-3">
+                <h2>Protein</h2>
+                <h5 class="text-secondary">26g</h5>
+                <div class="progress" role="progressbar" aria-label="Warning striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" style="width: 75%"></div>
+                </div>
+            </div>
+            <div class="p-3 shadow">
+                <div>
+                    <h2>Breakfast</h2>
+                    <div class="row">
+                        <div class="fw-bolder col-4 col-lg-1">
+                           1250 kcal
+                        </div>
+                        <div class="fw-bolder col-3 col-lg-1">
+                            480 kcal
+                        </div>
+                        <div class="fw-bolder col-3 col-lg-1">
+                            480 kcal
+                        </div>
+                        <div class="fw-bolder col-2 col-lg-1">
+                            8.5g
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <h4>Egg</h4>
+                    <div class="row">
+                        <div class="text-secondary col-4 col-lg-1">
+                            480 kcal
+                        </div>
+                        <div class="text-secondary col-3 col-lg-1">
+                            480 kcal
+                        </div>
+                        <div class="text-secondary col-3 col-lg-1">
+                            480 kcal
+                        </div>
+                        <div class="text-secondary col-2 col-lg-1">
+                            8.5g
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <button onclick="goToPage('add-food')" class="btn btn-primary rounded-5">Add +</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script src="/js/index.js"></script>
+</body>
+</html>
