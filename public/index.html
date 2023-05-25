@@ -54,61 +54,37 @@
         <div class="row">
             <div class="col-12 col-lg-4 mb-3">
                 <h2>Carbs</h2>
-                <h5 class="text-secondary">70g</h5>
+                <h5 id="total-carbs-text" class="text-secondary">70g</h5>
                 <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width: 75%"></div>
+                    <div id="total-carbs-progress" class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width: 0%"></div>
                 </div>
             </div>
             <div class="col-12 col-lg-4 mb-3">
                 <h2>Fat</h2>
-                <h5 class="text-secondary">26g</h5>
+                <h5 id="total-fat-text" class="text-secondary">26g</h5>
                 <div class="progress" role="progressbar" aria-label="Warning striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" style="width: 75%"></div>
+                    <div id="total-fat-progress" class="progress-bar progress-bar-striped bg-warning progress-bar-animated" style="width: 0%"></div>
                 </div>
             </div>
             <div class="col-12 col-lg-4 mb-3">
                 <h2>Protein</h2>
-                <h5 class="text-secondary">26g</h5>
+                <h5 id="total-protein-text" class="text-secondary">26g</h5>
                 <div class="progress" role="progressbar" aria-label="Warning striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" style="width: 75%"></div>
+                    <div id="total-protein-progress" class="progress-bar progress-bar-striped bg-info progress-bar-animated" style="width: 0%"></div>
                 </div>
             </div>
-            <div class="p-3 shadow">
-                <div>
-                    <h2>Breakfast</h2>
-                    <div class="row">
-                        <div class="fw-bolder col-4 col-lg-1">
-                           1250 kcal
-                        </div>
-                        <div class="fw-bolder col-3 col-lg-1">
-                            480 kcal
-                        </div>
-                        <div class="fw-bolder col-3 col-lg-1">
-                            480 kcal
-                        </div>
-                        <div class="fw-bolder col-2 col-lg-1">
-                            8.5g
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <h4>Egg</h4>
-                    <div class="row">
-                        <div class="text-secondary col-4 col-lg-1">
-                            480 kcal
-                        </div>
-                        <div class="text-secondary col-3 col-lg-1">
-                            480 kcal
-                        </div>
-                        <div class="text-secondary col-3 col-lg-1">
-                            480 kcal
-                        </div>
-                        <div class="text-secondary col-2 col-lg-1">
-                            8.5g
-                        </div>
-                    </div>
-                </div>
+            <div class="p-3 shadow mb-2" id="breakfast">
+
             </div>
+
+            <div class="p-3 shadow mb-2" id="lunch">
+
+            </div>
+
+            <div class="p-3 shadow mb-2" id="dinner">
+
+            </div>
+
 
             <div class="text-center mt-3">
                 <button onclick="goToPage('add-food')" class="btn btn-primary rounded-5">Add +</button>

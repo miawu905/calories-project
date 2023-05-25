@@ -12,7 +12,7 @@ const FoodSchema = new mongoose.Schema({
     type: String,
     enum: ["Breakfast", "Lunch", "Dinner"]
   },
-  eatDate: Date
+  eatDate: String
 }, {
   timestamps: true
 });

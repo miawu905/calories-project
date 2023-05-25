@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const superagent = require("superagent");
 const {FoodModel} = require("./schema");
 const API_KEY = 'C96VKZyVRh5BUH5QlwD7uQ==cTZBVsYUNO0m81JQ';
-mongoose.connect("mongodb://localhost:27017/foods")
+mongoose.connect("mongodb+srv://qwer1234:qwer1234@cluster0.xa6fp.mongodb.net/foods")
 
 const fetchFoodNutrition = async (foodName) => {
   const res = await superagent
@@ -26,6 +26,19 @@ const PORT = process.env.PORT || 5000;
 app.use(express.static('public'));
 app.use(express.json());
 
+
+app.get('/api/foods/:date', async (req, res) => {
+  try {
+    const {date} = req.params;
+    const foods = await FoodModel.find({
+      eatDate: date
+    });
+    res.status(200).json(foods);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
 
 app.post('/api/add-food', async (req, res) => {
   try {
