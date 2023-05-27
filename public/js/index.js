@@ -8,6 +8,11 @@ let data = {
   foods: []
 };
 
+// init current date is today
+
+const currentDatePicker = document.querySelector('#current-date');
+let todayDate = new Date();
+
 function renderPage() {
   pages.forEach(page => {
     if (document.querySelector(`#${page}`)) {
@@ -50,10 +55,36 @@ window.addEventListener('hashchange', function () {
 
 handleRoute();
 
-// init current date is today
+function handleDeleteFood(id) {
+  const confirm = window.confirm("Do you really want to delete it?");
+  if (confirm) {
+    fetch(`/api/foods/${id}`, {
+      method: 'DELETE'
+    }).then(() => {
+      fetchFoods();
+    })
+  }
 
-const currentDatePicker = document.querySelector('#current-date');
-const todayDate = new Date();
+}
+
+function handleUpdate(id) {
+  const newWeight = window.prompt("Please enter a new weight");
+  if (isNaN(Number(newWeight)) || Number(newWeight) === 0) {
+    return alert("Sorry, you must enter a valid number!");
+  }
+  const weight = Number(newWeight);
+  fetch(`/api/foods/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      weight: weight
+    })
+  }).then(() => {
+    fetchFoods();
+  })
+}
 
 function renderFoodsOfTime(foods, time) {
   let foodsHtml = '';
@@ -62,25 +93,29 @@ function renderFoodsOfTime(foods, time) {
     proteinTotal = 0,
     weightTotal = 0;
   for (let food of foods) {
-    carbsTotal += food.nutrition.carbs * food.weight;
-    fatTotal += food.nutrition.fat * food.weight;
-    proteinTotal += food.nutrition.protein * food.weight;
+    carbsTotal += food.nutrition.carbs * food.weight / 100;
+    fatTotal += food.nutrition.fat * food.weight / 100;
+    proteinTotal += food.nutrition.protein * food.weight / 100;
     weightTotal += food.weight;
     foodsHtml += `
       <div class="mt-2">
           <h4>${food.name}</h4>
           <div class="row">
-              <div class="text-secondary col-4 col-lg-2">
-                  ${(food.nutrition.carbs * food.weight).toFixed(1)} kcal
+              <div class="text-secondary col-2 col-lg-1">
+                  ${(food.nutrition.carbs * food.weight / 100).toFixed(1)} g
               </div>
-              <div class="text-secondary col-3 col-lg-2">
-                  ${(food.nutrition.fat * food.weight).toFixed(1)} kcal
+              <div class="text-secondary col-2 col-lg-1">
+                  ${(food.nutrition.fat * food.weight / 100).toFixed(1)} g
               </div>
-              <div class="text-secondary col-3 col-lg-2">
-                  ${(food.nutrition.protein * food.weight).toFixed(1)} kcal
+              <div class="text-secondary col-2 col-lg-1">
+                  ${(food.nutrition.protein * food.weight / 100).toFixed(1)} g
               </div>
-              <div class="text-secondary col-2 col-lg-2">
+              <div class="text-secondary col-2 col-lg-1">
                   ${food.weight} g
+              </div>
+              <div class="col-1 col-lg-2">
+                <button onclick="handleUpdate('${food._id}')" class="btn btn-info">Update</button>
+                <button onclick="handleDeleteFood('${food._id}')" class="btn btn-danger">Delete</button>
               </div>
           </div>
         </div>
@@ -92,16 +127,16 @@ function renderFoodsOfTime(foods, time) {
       <div>
           <h2>${time[0].toUpperCase()}${time.slice(1)}</h2>
           <div class="row">
-              <div class="fw-bolder col-4 col-lg-2">
-                 ${carbsTotal.toFixed(1)} kcal
+              <div class="fw-bolder col-2 col-lg-1">
+                 ${carbsTotal.toFixed(1)} g
               </div>
-              <div class="fw-bolder col-3 col-lg-2">
-                  ${fatTotal.toFixed(1)} kcal
+              <div class="fw-bolder col-2 col-lg-1">
+                  ${fatTotal.toFixed(1)} g
               </div>
-              <div class="fw-bolder col-3 col-lg-2">
-                  ${proteinTotal.toFixed(1)} kcal
+              <div class="fw-bolder col-2 col-lg-1">
+                  ${proteinTotal.toFixed(1)} g
               </div>
-              <div class="fw-bolder col-2 col-lg-2">
+              <div class="fw-bolder col-2 col-lg-1">
                   ${weightTotal.toFixed(1)} g
               </div>
           </div>
@@ -117,7 +152,6 @@ function renderFoods() {
   const breakfast = [];
   const lunch = [];
   const dinner = [];
-
   for (let food of foods) {
     if (food.eatTime === 'Breakfast') {
       breakfast.push(food);
@@ -133,28 +167,37 @@ function renderFoods() {
 
   let totalCarbs = 0,
       totalFat = 0,
-      totalProtein = 0;
+      totalProtein = 0,
+      total = 0;
 
   for (let food of foods) {
-    totalCarbs += food.weight * food.nutrition.carbs;
-    totalFat += food.weight * food.nutrition.fat;
-    totalProtein += food.weight * food.nutrition.protein;
+    totalCarbs += food.weight * food.nutrition.carbs / 100;
+    totalFat += food.weight * food.nutrition.fat / 100;
+    totalProtein += food.weight * food.nutrition.protein / 100;
   }
 
   document.querySelector('#total-carbs-text').innerHTML = totalCarbs.toFixed(1) + 'g';
   document.querySelector('#total-fat-text').innerHTML = totalFat.toFixed(1) + 'g';
-  document.querySelector('#total-protein-text').innerHTML += totalProtein.toFixed(1) + 'g';
+  document.querySelector('#total-protein-text').innerHTML = totalProtein.toFixed(1) + 'g';
 
-  document.querySelector('#total-carbs-progress').style.width = totalCarbs * 100 / (totalCarbs + totalFat + totalProtein) + '%';
-  document.querySelector('#total-fat-progress').style.width = totalFat * 100 / (totalCarbs + totalFat + totalProtein) + '%';
-  document.querySelector('#total-protein-progress').style.width = totalProtein * 100 / (totalCarbs + totalFat + totalProtein) + '%';
+
+  total = totalCarbs + totalFat + totalProtein;
+  if (total === 0) {
+    total = 1;
+  }
+  document.querySelector('#total-carbs-progress').style.width = totalCarbs * 100 / total + '%';
+  document.querySelector('#total-fat-progress').style.width = totalFat * 100 / total + '%';
+  document.querySelector('#total-protein-progress').style.width = totalProtein * 100 / total + '%';
+
+  const totalCalories = totalCarbs * 4 + totalFat * 9 + totalProtein * 4;
+  document.querySelector('#total').innerHTML = totalCalories + ' kcal';
 }
 
 
 
 // fetch foods of current date
 async function fetchFoods() {
-  const dateStr = todayDate.getFullYear() + '-' + (todayDate.getMonth() + 1) + '-' + todayDate.getDate();
+  const dateStr = data.currentDate.getFullYear() + '-' + (data.currentDate.getMonth() + 1) + '-' + data.currentDate.getDate();
   const res = await fetch(`/api/foods/${dateStr}`);
   const foods = await res.json();
   data.foods = foods;
@@ -173,6 +216,8 @@ const getTwoNumbers = (n) => {
 currentDatePicker.value = `${todayDate.getFullYear()}-${getTwoNumbers(todayDate.getMonth() + 1)}-${getTwoNumbers(todayDate.getDate())}`;
 currentDatePicker.addEventListener('change', function (e) {
   data.currentDate = new Date(currentDatePicker.value);
+
+  fetchFoods();
 })
 // handle add food submit
 const foodForm = document.querySelector('#food-form');
