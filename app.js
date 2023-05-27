@@ -3,8 +3,12 @@ const mongoose = require("mongoose");
 const superagent = require("superagent");
 const {FoodModel} = require("./schema");
 const API_KEY = 'C96VKZyVRh5BUH5QlwD7uQ==cTZBVsYUNO0m81JQ';
-mongoose.connect("mongodb://localhost:27017/foods")
-
+mongoose.connect("mongodb+srv://qwer1234:qwer1234@cluster0.xa6fp.mongodb.net/foods?retryWrites=true&w=majority")
+  .then(() => {
+    console.log('connect success')
+  }).catch(err => {
+    console.log(err)
+})
 const fetchFoodNutrition = async (foodName) => {
   const res = await superagent
     .get(`https://api.calorieninjas.com/v1/nutrition?query=${foodName}`)
